@@ -1,5 +1,5 @@
 import React from "react";
-import { useSkyfluxWS } from "../hooks/useSkyfluxWS";
+import { useSkyfluxWS } from "../hooks/useSkyFluxWS";
 import {
   getCO2Color,
   getCH4Color,
