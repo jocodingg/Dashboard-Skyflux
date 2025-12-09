@@ -15,7 +15,7 @@ export const useSkyfluxWS = () => {
   const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8080");
+    const ws = new WebSocket("ws://localhost:5000/ws");
 
     let timeout = null;
 
@@ -25,7 +25,11 @@ export const useSkyfluxWS = () => {
 
     ws.onmessage = (msg) => {
       const received = JSON.parse(msg.data);
-      setData(received);
+
+      // cek pesan "alldata"
+      if (received.type === "alldata" && received.data) {
+        setData(received.data);
+      }
 
       // setiap dapat data → LIVE
       setIsLive(true);

@@ -1,5 +1,8 @@
 import React from "react";
 import { useSkyfluxWS } from "../hooks/useSkyFluxWS";
+import DownloadModal from "../components/DownloadModal";
+import { useState } from "react";
+
 import {
   getCO2Color,
   getCH4Color,
@@ -14,6 +17,7 @@ import {
 const Dashboard = () => {
   // Ambil data realtime dari WebSocket
   const { data, isLive } = useSkyfluxWS();
+  const [openModal, setOpenModal] = useState(false);
 
   const Card = ({ icon, title, value, unit, color }) => (
     <div className="bg-white shadow-md rounded-2xl p-6 flex flex-col items-center text-center">
@@ -66,12 +70,19 @@ const Dashboard = () => {
       </div>
       {/* DOWNLOAD BUTTON */}
       <div className="w-full flex justify-center mt-10 mb-10">
-        <a
-          href="http://localhost:5000/api/download-data"
+        {/* Tombol download */}
+        <button
+          onClick={() => setOpenModal(true)}
           className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition"
         >
           Download Data Monitoring
-        </a>
+        </button>
+
+        {/* Modal Download */}
+        <DownloadModal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+        />
       </div>
     </div>
     
